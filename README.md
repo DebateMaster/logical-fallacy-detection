@@ -27,7 +27,7 @@ chmod +x build_run.sh
 
 
 ### Repo structure
-* `mlpt/datamodules` - Dataset generation and data augmentation modules like in pytorch datasets.
-* `mlpt/models` - Model definition and training.
-* `mlpt/utils` - Utils for training and inference.
-* `mlpt/modules` - Pytorch network modules.
+* `network/datamodules` - Dataset generation and data augmentation modules like in pytorch datasets.
+* `network/models` - Model definition and training.
+* `network/utils` - Utils for training and inference.
+* `network/modules` - Pytorch network modules.
