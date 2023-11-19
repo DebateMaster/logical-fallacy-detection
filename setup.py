@@ -8,7 +8,6 @@ def main():
     packages = list(map(lambda x: f'{package_name}/{x}', packages))
     reqs = [str(req) for req in parse_requirements(open('requirements.txt'))]
 
-
     setup(
         name=package_name,
         version='0.0.1',
