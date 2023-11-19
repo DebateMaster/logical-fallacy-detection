@@ -1,3 +1,5 @@
-sudo docker build . -t network
+sudo docker build . -t server
 PWD=$(pwd)
-sudo docker run -it -v $PWD:/workspace/network network
+sudo docker run -d -p 12023:12023 --name server --restart unless-stopped server
+docker ps
+docker logs server
