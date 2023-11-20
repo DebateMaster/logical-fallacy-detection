@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 @app.route('/ping')
 def ping():
     logger.info('ping received')
-    return 'pong lol'
+    return 'pong kek'
 
 
 if __name__ == '__main__':
