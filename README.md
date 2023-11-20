@@ -21,8 +21,8 @@ A repository containing the network to detect and classify logical fallacies in 
 
 * Build and run docker
 ```bash
-chmod +x build_run.sh
-./build_run.sh
+chmod +x deploy.sh
+./deploy.sh
 ```
 
 
