@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 12023
 
 # Command to run the application
-CMD ["waitress-serve", "--port=80", "app:app"]
+CMD ["waitress-serve", "--port=12023", "app:app"]
