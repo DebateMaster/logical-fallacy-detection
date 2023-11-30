@@ -48,7 +48,7 @@ def tokenize(tokenizer, text):
     return ids, mask, token_type_ids
 
 _model = RobertaClass(2, 'roberta-base')
-_model.load_state_dict(torch.load('network/models/binary_roberta_sd.pt'))
+_model.load_state_dict(torch.load('models/binary_roberta_sd.pt'))
 _model.eval()
 
 tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True)
