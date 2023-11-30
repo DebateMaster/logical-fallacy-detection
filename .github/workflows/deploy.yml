@@ -1,0 +1,26 @@
+name: Server push update
+
+on: 
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+  
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+         
+        - name: Set up SSH
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.DEPLOY_KEY }}" | base64 -d > ~/.ssh/id_rsa
+            chmod +x ~/.ssh/id_rsa
+            ssh-keyscan 34.85.198.249 >> ~/.ssh/known_hosts
+      
+        - name: Pull code on remote server
+          run: /
+            ssh -i ~/.ssh/id_rsa kdizzled@34.85.198.249 "cd /home/kdizzled/server/logical-fallacy-detection && git pull origin main"
