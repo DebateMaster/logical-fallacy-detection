@@ -22,5 +22,5 @@ jobs:
             ssh-keyscan 34.85.198.249 >> ~/.ssh/known_hosts
       
         - name: Pull code on remote server
-          run: /
-            ssh -vvv -i ~/.ssh/id_rsa kdizzled@34.85.198.249 
+          run: |
+            ssh -i ~/.ssh/id_rsa kdizzled@34.85.198.249 "cd /home/kdizzled/server/logical-fallacy-detection && git pull origin main"
