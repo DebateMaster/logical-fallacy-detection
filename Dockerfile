@@ -6,7 +6,6 @@ ARG UBUNTU="20.04"
 
 # Use Python 3.10 image as the base
 FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA_SHORT}-cudnn${CUDNN}-devel
-FROM nvidia/cuda:${CUDA}-base-ubuntu${UBUNTU}
 
 # Set working directory in the container
 WORKDIR /app
@@ -22,6 +21,9 @@ COPY . .
 
 # Expose the port the app runs on
 EXPOSE 12023
+
+
+FROM nvidia/cuda:${CUDA}-base-ubuntu${UBUNTU}
 
 # Command to run the application
 CMD ["waitress-serve", "--port=12023", "app:app"]
