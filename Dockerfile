@@ -1,9 +1,10 @@
 ARG PYTORCH="2.1.1"
-ARG CUDA="12.1"
+ARG CUDA="12.0.0"
 ARG CUDNN="8"
+ARG UBUNTU="20.04"
 
 # Use Python 3.10 image as the base
-FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
+FROM nvidia/cuda:${CUDA}-base-ubuntu${UBUNTU}
 
 # Set working directory in the container
 WORKDIR /app
