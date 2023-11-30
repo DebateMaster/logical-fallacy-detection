@@ -23,4 +23,4 @@ jobs:
       
         - name: Pull code on remote server
           run: /
-            ssh -vvv -i ~/.ssh/id_rsa kdizzled@34.85.198.249 "cd /home/kdizzled/server/logical-fallacy-detection && git pull origin main"
+            ssh -vvv -i ~/.ssh/id_rsa kdizzled@34.85.198.249 
