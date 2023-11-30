@@ -18,7 +18,7 @@ jobs:
           run: |
             mkdir -p ~/.ssh
             echo "${{ secrets.DEPLOY_KEY }}" | base64 -d > ~/.ssh/id_rsa
-            chmod +x ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
             ssh-keyscan 34.85.198.249 >> ~/.ssh/known_hosts
       
         - name: Pull code on remote server
