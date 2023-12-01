@@ -21,6 +21,6 @@ fi
 # Configure the container runtime
 # sudo nvidia-ctk runtime configure --runtime=docker
 # Run the server
-sudo docker run --gpus all -d -p 12023:12023 --name $SERVER_CONTAINER --restart unless-stopped $SERVER_CONTAINER
+sudo docker run --gpus all -d -p 443:443 --name $SERVER_CONTAINER --restart unless-stopped $SERVER_CONTAINER
 sudo docker ps
 sudo docker logs $SERVER_CONTAINER
