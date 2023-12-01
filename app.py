@@ -12,7 +12,7 @@ app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
 
-@app.route('/text_predict', methods=['GET'])
+@app.route('/text_predict', methods=['GET', 'OPTIONS'])
 def get_predict_handler():
     if request.method == 'OPTIONS':
         response = Flask.make_response()
