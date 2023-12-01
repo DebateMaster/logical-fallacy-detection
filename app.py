@@ -26,8 +26,13 @@ def get_predict_handler():
         logger.info('Received GET request')
         text = request.args.get('text')
         prediction = network.predict(text)
-        return jsonify(prediction=prediction)
-
+        response = make_response(jsonify(prediction=prediction))
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, User-Agent'
+        response.headers['Access-Control-Max-Age'] = '86400'
+        response.headers['Access-Control-Request-Method'] = 'GET'
+        return response
 
 if __name__ == '__main__':
     app.run()
