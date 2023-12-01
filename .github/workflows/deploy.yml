@@ -19,11 +19,11 @@ jobs:
             mkdir -p ~/.ssh
             echo "${{ secrets.DEPLOY_KEY }}" | base64 -d > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan 34.85.198.249 >> ~/.ssh/known_hosts
+            ssh-keyscan strangers.pub >> ~/.ssh/known_hosts
       
         - name: Pull code on remote server
           run: |
-            ssh -vvv -i ~/.ssh/id_rsa kdizzled@34.85.198.249 "
+            ssh -vvv -i ~/.ssh/id_rsa kdizzled@strangers.pub "
             cd /home/kdizzled/server/logical-fallacy-detection && 
             git pull origin main && 
             chmod +x ./deploy.sh && 
