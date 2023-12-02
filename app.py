@@ -19,8 +19,11 @@ def get_predict_handler():
     else:
         logger.info('Received GET request')
         text = request.args.get('text')
-        prediction = network.predict(text)
-        response = make_response(jsonify(prediction=prediction))
+        prediction, category = network.predict(text)
+        response = make_response(jsonify(
+            prediction=prediction, 
+            category=category
+        ))
     
     # Preflight request handling
     response.headers['Access-Control-Allow-Origin'] = '*'

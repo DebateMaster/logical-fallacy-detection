@@ -3,6 +3,7 @@ import pandas as pd
 import torch
 import time
 from transformers import ElectraTokenizer
+from typing import Tuple
 
 from network.utils.models import ProtoTEx_electra
 
@@ -96,13 +97,14 @@ def predict_fallacy(text: str) -> str:
         predict = torch.argmax(classfn_out, dim=1)
     return predict[0].tolist()
 
-def predict_outcome(text: str) -> str:
+def predict_outcome(text: str) -> Tuple[bool, str]:
     prediction = predict_fallacy(text)
     if prediction == 0:
-        return 'Thers is no fallacy.'
+        return False, 'There is no fallacy.'
     else:
         prediction = predict_class(text)
         if prediction == 'O':
-            return 'There is some fallacy, but we couldn\'t figure what exactly.'
+            fallacy = 'There is some fallacy, but we couldn\'t figure what exactly.'
         else:
-            return f'There is {prediction}.'
+            fallacy = f'There is {prediction}.'
+        return True, fallacy
