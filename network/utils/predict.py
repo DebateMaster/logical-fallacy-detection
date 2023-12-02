@@ -40,8 +40,8 @@ def upload_model(model, path):
     model.load_state_dict(model_dict)
     model.eval()
 
-upload_model(fine_grained_model, '../models/curr_finegrained_nli_electra_prototex')
-upload_model(binary_model, '../models/curr_binary_nli_electra_prototex')
+upload_model(fine_grained_model, 'network/models/curr_finegrained_nli_electra_prototex')
+upload_model(binary_model, 'network/models/curr_binary_nli_electra_prototex')
 
 def tokenize(tokenizer, text):
     text = str(text)
