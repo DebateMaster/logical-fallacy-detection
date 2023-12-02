@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import torch
-import wandb
 import time
 from transformers import ElectraTokenizer
 
