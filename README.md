@@ -1,6 +1,17 @@
 # Logical Fallacy Detection
 A repository containing the network to detect and classify logical fallacies in text.
 
+# Model evaluation
+## Binary classification
+
+![bin train accuracy](etc/img/bin_train_acc.png "Roberta training accuracy") ![bin train loss](etc/img/bin_train_loss.png "Roberta training loss")
+![bin eval accuracy](etc/img/bin_val_acc.png "Roberta validation accuracy") ![bin eval loss](etc/img/bin_val_loss.png "Roberta validation loss")
+
+## Multiclass classification
+![electra train accuracy](etc/img/electra_train_acc.png "Electra training accuracy") ![electra train loss](etc/img/electra_loss.png "Electra training loss")
+![electra eval accuracy](etc/img/electra_eval_accuracy.png "Electra validation accuracy") ![electra eval loss](etc/img/electra_val_loss.png "Electra validation loss")
+
+
 
 * Run docker 
 * Modify docker settings to: 
