@@ -1,13 +1,14 @@
 import os
 import pandas as pd
 import torch
-import time
-from transformers import ElectraTokenizer
 from typing import Tuple
+from transformers import ElectraTokenizer, RobertaTokenizer
 
 from network.utils.models import ProtoTEx_electra
+from network.utils.roBERTa import RobertaClass
 
-tokenizer = ElectraTokenizer.from_pretrained("howey/electra-base-mnli")
+roberta_tokenizer = RobertaTokenizer.from_pretrained("roberta-base", truncation=True, do_lower_case=True)
+electra_tokenizer = ElectraTokenizer.from_pretrained("howey/electra-base-mnli")
 fine_grained_model = ProtoTEx_electra(
     num_prototypes=50,
     num_pos_prototypes=49,
@@ -18,16 +19,10 @@ fine_grained_model = ProtoTEx_electra(
     p=1, 
     batchnormlp1=True,
 ).cuda()
-binary_model = ProtoTEx_electra(
-    num_prototypes=50,
-    num_pos_prototypes=49,
-    n_classes=2,
-    bias=False,
-    dropout=False,
-    special_classfn=True,  
-    p=1, 
-    batchnormlp1=True,
-).cuda()
+
+binary_model = RobertaClass(2, 'roberta-base').cuda()
+binary_model.to("cuda")
+binary_model.eval()
 
 
 def upload_model(model, path):
@@ -41,8 +36,7 @@ def upload_model(model, path):
     model.load_state_dict(model_dict)
     model.eval()
 
-upload_model(fine_grained_model, 'network/models/curr_finegrained_nli_electra_prototex')
-upload_model(binary_model, 'network/models/curr_binary_nli_electra_prototex')
+upload_model(fine_grained_model, '../models/curr_finegrained_nli_electra_prototex')
 
 def tokenize(tokenizer, text):
     text = str(text)
@@ -59,7 +53,28 @@ def tokenize(tokenizer, text):
     ids = ids[None, :].long()
     mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
     mask = mask[None, :].long()
-    return ids, mask
+    return ids.to('cuda'), mask.to('cuda')
+
+
+def binary_tokenize(tokenizer, text):
+    text = str(text)
+    text = " ".join(text.split())
+
+    inputs = tokenizer.encode_plus(
+            text,
+            None,
+            add_special_tokens=True,
+            max_length=256,
+            pad_to_max_length=True,
+            return_token_type_ids=True
+        )
+    ids = torch.tensor(inputs['input_ids'], dtype=torch.long)
+    ids = ids[None, :].long()
+    mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
+    mask = mask[None, :].long()
+    token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
+    token_type_ids = token_type_ids[None, :].long()
+    return ids.to('cuda'), mask.to('cuda'), token_type_ids.to('cuda')
 
 classes = {
         0: 'O',
@@ -78,9 +93,8 @@ classes = {
         13: 'equivocation'
 }
 
-
 def predict_class(text: str) -> str: 
-    classfn_out = fine_grained_model.forward(*tokenize(tokenizer, text), use_decoder=False, use_classfn=1)
+    classfn_out = fine_grained_model.forward(*tokenize(electra_tokenizer, text), use_decoder=False, use_classfn=1)
     if classfn_out.ndim == 1:
         predict = torch.zeros_like(y)
         predict[classfn_out > 0] = 1
@@ -89,13 +103,14 @@ def predict_class(text: str) -> str:
     return classes[predict[0].tolist()]
 
 def predict_fallacy(text: str) -> str:
-    classfn_out = binary_model.forward(*tokenize(tokenizer, text), use_decoder=False, use_classfn=1)
+    classfn_out = binary_model.forward(*binary_tokenize(roberta_tokenizer, text))
     if classfn_out.ndim == 1:
         predict = torch.zeros_like(y)
         predict[classfn_out > 0] = 1
     else:
         predict = torch.argmax(classfn_out, dim=1)
     return predict[0].tolist()
+
 
 def predict_outcome(text: str) -> Tuple[bool, str]:
     prediction = predict_fallacy(text)

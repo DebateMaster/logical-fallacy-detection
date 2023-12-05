@@ -1,3 +1,4 @@
 *.pt filter=lfs diff=lfs merge=lfs -text
 network/models/curr_binary_nli_electra_prototex filter=lfs diff=lfs merge=lfs -text
 network/models/curr_finegrained_nli_electra_prototex filter=lfs diff=lfs merge=lfs -text
+network/models/binary_roberta.pt filter=lfs diff=lfs merge=lfs -text
