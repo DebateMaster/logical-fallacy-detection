@@ -27,7 +27,8 @@ chmod +x deploy.sh
 
 
 ### Repo structure
-* `network/datamodules` - Dataset generation and data augmentation modules like in pytorch datasets.
-* `network/models` - Model definition and training.
-* `network/utils` - Utils for training and inference.
-* `network/modules` - Pytorch network modules.
+* `network/models` - Models weights.
+* `network/utils` - Models definitions and utils for inference.
+* `network/training/data` - Data used for training binary and multiclass classification models.
+* `network/training/baseline` - Code for training baseline NLI models.
+* `network/training/prototex` - Code for training CBR ProtoTEx model.
