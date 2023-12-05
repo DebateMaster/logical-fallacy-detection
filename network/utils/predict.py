@@ -19,11 +19,7 @@ fine_grained_model = ProtoTEx_electra(
     p=1, 
     batchnormlp1=True,
 ).cuda()
-
-binary_model = torch.load('network/models/binary_roberta.pt')
-binary_model.to("cuda")
-binary_model.eval()
-
+binary_model = RobertaClass(2, 'roberta-base').cuda()
 
 def upload_model(model, path):
     pretrained_dict = torch.load(path)
@@ -37,6 +33,7 @@ def upload_model(model, path):
     model.eval()
 
 upload_model(fine_grained_model, 'network/models/curr_finegrained_nli_electra_prototex')
+upload_model(binary_model, 'network/models/binary_roberta.pt')
 
 def tokenize(tokenizer, text):
     text = str(text)
