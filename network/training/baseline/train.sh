@@ -1,0 +1,11 @@
+python train_roBERTa.py \
+-tr ../data/bigbench/train.csv \
+-dv ../data/bigbench/val.csv \
+-tk 'roberta-base' \
+-mn 'roberta-base' \
+-mp ../models/binary_roberta.pt \
+-ia 'text' \
+-ta 'label' \
+-d  0 \
+-op 2 \
+-ep 30
